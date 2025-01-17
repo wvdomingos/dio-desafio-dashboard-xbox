@@ -1,0 +1,7 @@
+expression Pasta = "C:\_Wander\Drive\Meu Drive\Documentos\Cursos\Dio.me\Heineken - Inteligência Artificial Aplicada a Dados com Copilot\dio-desafio-dashboard-xbox\base\" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 84555135-dabd-477f-9f17-d8720b2c699f
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Text
+

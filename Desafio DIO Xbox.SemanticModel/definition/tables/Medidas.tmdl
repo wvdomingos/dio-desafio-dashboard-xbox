@@ -1,0 +1,97 @@
+table Medidas
+	lineageTag: 04c0876a-6235-454b-b553-11fd37186876
+
+	measure 'Total Faturamento' = SUM(fVendas[Total Value])
+		formatString: "R$"\ #,0.00;-"R$"\ #,0.00;"R$"\ #,0.00
+		lineageTag: 3d903041-1768-4547-b39a-117e45d6c2cf
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	measure 'Faturamento Médio' =
+			
+			AVERAGE(fVendas[Subscription Price])
+		formatString: "R$"\ #,0.00;-"R$"\ #,0.00;"R$"\ #,0.00
+		lineageTag: f5627330-7be5-44dc-9fb1-5d83894c8610
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	measure 'Total Assinantes' = DISTINCTCOUNT(fVendas[Subscriber ID])
+		formatString: #,0
+		lineageTag: db0cf7df-a51d-46b1-a5cf-75f11e0e70c6
+
+	measure 'Assinantes Ativos' =
+			
+			CALCULATE(
+			    DISTINCTCOUNT(fVendas[Subscriber ID]),
+			    fVendas[Auto Renewal] = "Yes"
+			)
+		formatString: #,0
+		lineageTag: 9f706321-ca36-456d-b20c-3de011551131
+
+	measure 'Faturamento Minecraft' = SUM(fVendas[Minecraft Season Pass Price])
+		formatString: "R$"\ #,0.00;-"R$"\ #,0.00;"R$"\ #,0.00
+		lineageTag: 80215ac4-52ee-4b9c-be72-6338bb2d3cba
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	measure 'Descontos Concedidos' = SUM(fVendas[Coupon Value])
+		formatString: "R$"\ #,0.00;-"R$"\ #,0.00;"R$"\ #,0.00
+		lineageTag: c8de78b7-3e16-436c-8150-1e560abd6363
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	measure 'Faturamento Líquido' =
+			
+			[Total Faturamento] - [Descontos Concedidos]
+		formatString: "R$"\ #,0.00;-"R$"\ #,0.00;"R$"\ #,0.00
+		lineageTag: 3ad780f9-fef0-4757-bba7-468b7f0f25d6
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	measure 'Crescimento Faturamento' =
+			
+			CALCULATE(
+			    [Total Faturamento],
+			    DATEADD(Calendar[Data], -1, MONTH)
+			)
+		formatString: 0
+		lineageTag: 2f25cae2-bb0c-47da-a4ca-43bdf4bf6231
+
+	measure 'Taxa Renovação' =
+			
+			DIVIDE(
+			    [Assinantes Ativos],
+			    [Total Assinantes],
+			    0
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: b75e7f2a-b531-48d5-afa2-f83bd07923e8
+
+	measure 'Faturamento EA Play' = SUM(fVendas[EA Play Season PassPrice])
+		formatString: "R$"\ #,0.00;-"R$"\ #,0.00;"R$"\ #,0.00
+		lineageTag: d5a64498-3705-43c4-9bee-19611b4df88a
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	column 'Coluna 1'
+		dataType: string
+		isHidden
+		lineageTag: c7487baf-0b87-42fd-aa8a-34f4fd1637ef
+		summarizeBy: none
+		sourceColumn: Coluna 1
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Medidas = m
+		mode: import
+		source =
+				let
+				    Fonte = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i44FAA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [#"Coluna 1" = _t]),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(Fonte,{{"Coluna 1", type text}})
+				in
+				    #"Tipo Alterado"
+
+	annotation PBI_ResultType = Table
+

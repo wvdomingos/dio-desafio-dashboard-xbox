@@ -1,0 +1,9 @@
+relationship 9e57b505-641c-4b32-be67-ec480654a0a0
+	toCardinality: many
+	fromColumn: Calendar.Data
+	toColumn: Periods.Data
+
+relationship 19daa814-0474-f7e8-8351-c35612743537
+	fromColumn: fVendas.'Start Date'
+	toColumn: Calendar.Data
+

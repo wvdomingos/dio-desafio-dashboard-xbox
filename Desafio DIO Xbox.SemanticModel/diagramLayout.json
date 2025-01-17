@@ -1,0 +1,91 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 590.40000915527344,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 104.59999084472656,
+            "y": 322.79999923706055
+          },
+          "nodeIndex": "fVendas",
+          "nodeLineageTag": "6b7b72ba-22be-459d-b086-10bbf172f57a",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 1,
+          "expandedHeight": 300
+        },
+        {
+          "location": {
+            "x": 294,
+            "y": 0
+          },
+          "nodeIndex": "Calendar",
+          "nodeLineageTag": "b9299ed3-4e48-4353-af27-27952260b206",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 4,
+          "expandedHeight": 300
+        },
+        {
+          "location": {
+            "x": 663,
+            "y": 0
+          },
+          "nodeIndex": "Periods",
+          "nodeLineageTag": "06d8fb60-9c9a-4ce8-88cc-fbf57862fcc5",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 2,
+          "expandedHeight": 200
+        },
+        {
+          "location": {
+            "x": 1006.7999572753906,
+            "y": 0
+          },
+          "nodeIndex": "Time",
+          "nodeLineageTag": "07e7110b-40fa-481c-8f82-f2ae0cce905f",
+          "size": {
+            "height": 72,
+            "width": 234
+          },
+          "zIndex": 3,
+          "expandedHeight": 300
+        },
+        {
+          "location": {
+            "x": 1290.4000091552734,
+            "y": 0
+          },
+          "nodeIndex": "Medidas",
+          "nodeLineageTag": "04c0876a-6235-454b-b553-11fd37186876",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 5
+        }
+      ],
+      "name": "Todas as tabelas",
+      "zoomValue": 100,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "Todas as tabelas",
+  "defaultDiagram": "Todas as tabelas"
+}

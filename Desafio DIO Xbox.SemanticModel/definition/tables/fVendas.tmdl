@@ -1,0 +1,137 @@
+table fVendas
+	lineageTag: 6b7b72ba-22be-459d-b086-10bbf172f57a
+
+	column 'Subscriber ID'
+		dataType: int64
+		formatString: 0
+		lineageTag: 19ac5694-2871-4601-94c9-e2417d8b9039
+		summarizeBy: count
+		sourceColumn: Subscriber ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Name
+		dataType: string
+		lineageTag: b7f95e2a-3953-49a3-9e0d-4fcc24b4e334
+		summarizeBy: none
+		sourceColumn: Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Plan
+		dataType: string
+		lineageTag: 8200dc6f-d060-454f-8de3-9caa8c8e2147
+		summarizeBy: none
+		sourceColumn: Plan
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Start Date'
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: d29e1cfc-fdec-49d5-8e35-5260e8e17bcb
+		summarizeBy: none
+		sourceColumn: Start Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Auto Renewal'
+		dataType: string
+		lineageTag: 0e211873-d283-4378-8102-00de8ced1332
+		summarizeBy: none
+		sourceColumn: Auto Renewal
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Subscription Price'
+		dataType: int64
+		formatString: 0
+		lineageTag: 35df92b7-f6dd-499b-986e-e52e4a239e90
+		summarizeBy: sum
+		sourceColumn: Subscription Price
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Subscription Type'
+		dataType: string
+		lineageTag: 1861c610-6c23-4162-9fed-acb30a53ccca
+		summarizeBy: none
+		sourceColumn: Subscription Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'EA Play Season Pass'
+		dataType: string
+		lineageTag: 57f6d078-beb7-425e-9eae-10d64e1d25dc
+		summarizeBy: none
+		sourceColumn: EA Play Season Pass
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'EA Play Season PassPrice'
+		dataType: int64
+		formatString: 0
+		lineageTag: b0930589-3894-4e9c-925b-a930f16aa89b
+		summarizeBy: sum
+		sourceColumn: EA Play Season PassPrice
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Minecraft Season Pass'
+		dataType: string
+		lineageTag: 695c4286-3728-4146-b3b8-028f8479087c
+		summarizeBy: none
+		sourceColumn: Minecraft Season Pass
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Minecraft Season Pass Price'
+		dataType: int64
+		formatString: 0
+		lineageTag: 7ffb2080-8ad6-4800-bedc-6d3afa6867b2
+		summarizeBy: sum
+		sourceColumn: Minecraft Season Pass Price
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Coupon Value'
+		dataType: int64
+		formatString: 0
+		lineageTag: 174b999a-1455-4b08-b962-506a86381a4b
+		summarizeBy: sum
+		sourceColumn: Coupon Value
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Total Value'
+		dataType: int64
+		formatString: 0
+		lineageTag: 48250ffc-8da2-4371-b09e-3256be92766c
+		summarizeBy: sum
+		sourceColumn: Total Value
+
+		annotation SummarizationSetBy = Automatic
+
+	partition fVendas = m
+		mode: import
+		source =
+				let
+				    Fonte = Folder.Files(Pasta),
+				    #"Linhas Filtradas" = Table.SelectRows(Fonte, each ([Name] = "base.xlsx")),
+				    Personalizar1 = #"Linhas Filtradas"[Content],
+				    Personalizar2 = Personalizar1{0},
+				    #"Pasta de Trabalho Importada do Excel" = Excel.Workbook(Personalizar2),
+				    B̳ases_Sheet = #"Pasta de Trabalho Importada do Excel"{[Item="B̳ases",Kind="Sheet"]}[Data],
+				    #"Cabeçalhos Promovidos" = Table.PromoteHeaders(B̳ases_Sheet, [PromoteAllScalars=true]),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(#"Cabeçalhos Promovidos",{{"Subscriber ID", Int64.Type}, {"Name", type text}, {"Plan", type text}, {"Start Date", type date}, {"Auto Renewal", type text}, {"Subscription Price", Int64.Type}, {"Subscription Type", type text}, {"EA Play Season Pass", type text}, {"Minecraft Season Pass", type text}, {"Minecraft Season Pass Price", Int64.Type}, {"Coupon Value", Int64.Type}, {"Total Value", Int64.Type}}),
+				    #"Valor Substituído" = Table.ReplaceValue(#"Tipo Alterado","-",0,Replacer.ReplaceValue,{"EA Play Season Pass#(lf)Price"}),
+				    #"Tipo Alterado1" = Table.TransformColumnTypes(#"Valor Substituído",{{"EA Play Season Pass#(lf)Price", Int64.Type}})
+				in
+				    #"Tipo Alterado1"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

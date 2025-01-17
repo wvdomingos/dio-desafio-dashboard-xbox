@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "Desafio DIO Xbox"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "4f7f98f3-c1c1-4611-ac7f-3567c1ecbf97"
+  }
+}
